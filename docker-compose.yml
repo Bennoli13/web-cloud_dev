@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+
+  rabbitmq:
+    container_name: some-rabbit
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+
+  create_user:
+    container_name: create-user
+    build: create_user/
+    ports:
+      - "5000:5000"
+    links: 
+      - rabbitmq
+      
+  data_service:
+    container_name: data-service
+    build: data_service/
+    links: 
+      - rabbitmq
+      - mongodb 
+ 
+  mongodb:
+    container_name: insert-mongodb
+    image: mongo
+    volumes:
+      - "./db:/data/db"
+    ports:
+      - 27017:27017
+
+  mongodb:
+    container_name: query-mongodb
+    image: mongo
+    volumes:
+      - "./db:/data/db"
+    ports:
+      - 27018:27018
+
