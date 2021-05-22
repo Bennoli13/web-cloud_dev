@@ -1,0 +1,18 @@
+config = {
+   _id : "my-mongo-set",
+   members: [
+      { _id: 0, host: "insert-mongodb:27017" },
+      { _id: 1, host: "query-mongodb:27017" },
+   ]
+};
+
+
+//compressed via: https://jscompress.com/
+
+config={_id:"my-mongo-set",members:[{_id:0,host:"insert-mongodb:27017"},{_id:1,host:"query-mongodb:27017"}]};
+
+//step by step
+mongo
+> config = config={_id:"my-mongo-set",members:[{_id:0,host:"insert-mongodb:27017"},{_id:1,host:"query-mongodb:27017"}]};
+> rs.initiate(config)
+> rs.config()

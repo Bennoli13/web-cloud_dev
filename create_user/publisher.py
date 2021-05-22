@@ -1,9 +1,9 @@
 import sys
 import pika
 
-def publisher(message):
+def publisher(message, host_ip):
     connection= pika.BlockingConnection(
-            pika.ConnectionParameters(host='192.168.219.1'))
+            pika.ConnectionParameters(host=host_ip))
     channel = connection.channel()
     channel.queue_declare(queue='task_queue', durable=True)
     

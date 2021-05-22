@@ -2,4 +2,5 @@ pika
 flask
 publisher
 pymongo
+bcrypt
 

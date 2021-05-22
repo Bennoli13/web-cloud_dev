@@ -5,4 +5,4 @@ WORKDIR /app
 COPY . .
 RUN pip install -r requirements.txt
 
-CMD python -u consumer.py $HOST_IP
+CMD python query.py $HOST_IP
