@@ -1,3 +1,4 @@
+//Replicaset Configuration
 config = {
    _id : "my-mongo-set",
    members: [
@@ -6,13 +7,23 @@ config = {
    ]
 };
 
-
 //compressed via: https://jscompress.com/
-
 config={_id:"my-mongo-set",members:[{_id:0,host:"insert-mongodb:27017"},{_id:1,host:"query-mongodb:27017"}]};
 
 //step by step
+1. Login to mongodb PRIMARY docker container
+sudo docker exec -ti insert-mongodb /bin/bash
+
+2. Activate mongo CLI
 mongo
-> config = config={_id:"my-mongo-set",members:[{_id:0,host:"insert-mongodb:27017"},{_id:1,host:"query-mongodb:27017"}]};
-> rs.initiate(config)
-> rs.config()
+
+3. (inside mongo cli) Set Variable config using replicaset Configuration above
+config = config={_id:"my-mongo-set",members:[{_id:0,host:"insert-mongodb:27017"},{_id:1,host:"query-mongodb:27017"}]};
+
+4. (inside mongo cli) Initialize the config
+rs.initiate(config)
+
+5. (inside mongo cli) Check if the config is successful
+rs.config()
+
+6. Quit from docker container
