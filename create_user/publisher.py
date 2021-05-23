@@ -1,3 +1,6 @@
+#This code to publish the data to rabbitmq
+#This code is used by flaskapp.py
+
 import sys
 import pika
 
@@ -20,7 +23,10 @@ def publisher(message, host_ip):
     return "ok"
 
 if __name__ == '__main__':
-    message= "".join(sys.argv[1:]) or "Hello World!"
-    publisher(message)
+    if sys.argv[1:] is None:
+        host_ip = "mongodb://localhost:27017/"
+    else:
+        host_ip = "mongodb://"+sys.argv[1]+":27017/"
+    publisher(message, host_ip)
 
 

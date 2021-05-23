@@ -7,15 +7,19 @@ import sys
 import bcrypt
 import os
 
-
 #Flask Part
 app = Flask(__name__)
 data = {"key":"this is default"}
+
+#The Dockerfile will execute flaskapp with the host IP defined
 host_ip = sys.argv[1]
+#define the database address so that we could call it whenever we need to connect to the database
 db_add = "mongodb://"+host_ip+":27017/"
+
+#this variable is for connection testing only
 test_message={}
 
-#database part
+#database part, define database name, collection, etc for mongodb
 myclient = pymongo.MongoClient(db_add)
 mydb = myclient["mydatabase"]
 mycol = mydb = mydb["key"]
@@ -27,12 +31,14 @@ def entry_point():
 
 @app.route('/insert',methods=['POST'])
 def insert_db():
-    #data = request.get_json() #this part is fect the value from the body
+    #data = request.get_json() #this part is fecth the value from the request body
     
+    #check if the password and re-enter password is NOT match 
     if request.form['psw'] != request.form['psw-repeat']:
         error_msg="Password did not Match"
         return render_template('index.html', error_msg=error_msg)
     else:
+        #get the value from the html form 
         fname = request.form['fname']
         lname = request.form['lname']
         uname = request.form['uname']
@@ -45,18 +51,24 @@ def insert_db():
             "email": email,
             "psw": bcrypt.hashpw(psw.encode(), bcrypt.gensalt()).decode('utf-8'),
         }
+        
+        #this variable for checking connection only
         global test_message
         test_message = message
+
+        #send the message to the publisher 
         result = publisher.publisher(json.dumps(message),host_ip)
         error_msg="New Record Added!"
         return render_template('index.html', error_msg=error_msg)
 
+#this is for testting only
 @app.route('/test',methods=['GET'])
 def check():
     if request.args.get('psw') is None:
         global test_message
         return test_message
     else:
+        #use this to check whether or not Inputted password match with database
         new_psw = request.args.get('psw')
         check = bcrypt.checkpw(new_psw.encode(), test_message['psw'].encode('utf-8'))
         return str(check)
