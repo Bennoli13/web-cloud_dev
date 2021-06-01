@@ -27,6 +27,7 @@ if __name__ == '__main__':
         host_ip = "mongodb://localhost:27017/"
     else:
         host_ip = "mongodb://"+sys.argv[1]+":27017/"
-    publisher(message, host_ip)
+    message = "test"
+    publisher(message, sys.argv[1])
 
 
