@@ -42,7 +42,10 @@ def load_user():
     if 'user_id' in session:
         data_ = database.main(db_add)
         user = load_db('_id', session['user_id'])
-        g.user = user[0]
+        try:
+            g.user = user[0]
+        except:
+            g.user =None
 
 @app.route('/', methods=[ 'GET','POST'])
 def main():
@@ -144,6 +147,7 @@ def update(id):
 @app.route('/logout', methods=['GET'])
 def logout():
     g.user = None
+    session.clear()
     return redirect('/')
 
 if __name__ == '__main__':
