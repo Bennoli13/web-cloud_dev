@@ -9,8 +9,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'youknowwhat?Imsmartthanyouknow'
-host_ip = sys.argv[1]
-#host_ip = "127.0.0.1"
+#host_ip = sys.argv[1]
+host_ip = "127.0.0.1"
 db_add = "mongodb://"+host_ip+":27018/"
 db_add_del = "mongodb://"+host_ip+":27017/"
 
@@ -145,4 +145,4 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5011,debug=True)
+    app.run(host='0.0.0.0',port=5001,debug=True)
