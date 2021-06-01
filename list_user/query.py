@@ -54,14 +54,16 @@ def main():
         
         #session
         session.pop('user_id', None)
-
-        if bcrypt.checkpw(psw.encode(), user[0]['psw'].encode('utf-8')):
-            user_id = user[0]['_id']
-            session['user_id'] = user_id
-            g._id = user_id
-            return redirect(url_for('todo'))
-        else:
-            return render_template('login.html', alert="Wrong User/ Password")
+        try:
+            if bcrypt.checkpw(psw.encode(), user[0]['psw'].encode('utf-8')):
+                user_id = user[0]['_id']
+                session['user_id'] = user_id
+                g._id = user_id
+                return redirect(url_for('todo'))
+            else:
+                return render_template('login.html', alert="Wrong User/ Password")
+        except:
+            return render_template('login.html', alert="Invalid User")
     else:
         return render_template('login.html', alert="")
     
