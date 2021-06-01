@@ -4,6 +4,14 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
 </head>
 <body>
+  <div class="panel">
+    <ul>
+        <li><a class="active" href="/logout">Logout</a></li>
+        {% if "admin" == g.user.uname %}
+        <li><a class="" href="/todo">To Do</a></li>  
+        {% endif %}
+    </ul>
+</div>
 
 <h1>HELLO {{g.user.uname}}</h1>
 <h2>LIST USERS</h2>
