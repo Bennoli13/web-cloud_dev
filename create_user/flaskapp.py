@@ -13,8 +13,8 @@ app = Flask(__name__)
 data = {"key":"this is default"}
 
 #The Dockerfile will execute flaskapp with the host IP defined
-#host_ip = sys.argv[1]
-host_ip = "127.0.0.1"
+host_ip = sys.argv[1]
+#ost_ip = "127.0.0.1"
 #define the database address so that we could call it whenever we need to connect to the database
 db_add = "mongodb://"+host_ip+":27017/"
 
